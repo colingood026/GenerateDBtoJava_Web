@@ -1,0 +1,1 @@
+<% response.sendRedirect("/GenerateDBtoJava/generate/init.do"); %>

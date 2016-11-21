@@ -4,13 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/mvc")
+@RequestMapping("/")
 public class IndexController {
 
-    @RequestMapping("/init")
+    @RequestMapping("/generate/init.do")
     public String init(){
  
-            return "index";
+            return "generate";
  
     }
 }
