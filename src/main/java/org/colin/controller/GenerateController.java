@@ -1,6 +1,8 @@
 package org.colin.controller;
 
 
+import javax.annotation.Resource;
+
 import org.colin.common.enumClass.OrMappingEnum;
 import org.colin.generate.mybatis.toLocal.MybatisGeneratorToLocal;
 import org.colin.vo.ConnDeatilVo;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GenerateController {
 
     
-
+    @Resource MybatisGeneratorToLocal mybatisGeneratorToLocal;
     
     
     @RequestMapping("/generate.do")
@@ -31,7 +33,7 @@ public class GenerateController {
                 new ConnDeatilVo(url, userNm, psd, tables, dbDriverClassNm,orMappingType,savedLocation);
         
         if(orMappingType.equals(OrMappingEnum.Mybatis.getOrMappingName())){
-            MybatisGeneratorToLocal.generate(connDeatilVo);
+            mybatisGeneratorToLocal.generate(connDeatilVo);
         }else{
             System.out.println("hibernate");
         }
@@ -39,6 +41,6 @@ public class GenerateController {
         
         
     }
-    
+
     
 }

@@ -4,7 +4,10 @@ import java.util.Set;
 
 import org.colin.common.enumClass.ImportJarEnum;
 import org.colin.common.util.MethodUtils;
+import org.colin.vo.TableFieldsVo;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GenerateMybatisMapper {
 	/**
 	 * 
@@ -12,9 +15,9 @@ public class GenerateMybatisMapper {
 	 * @param fields
 	 * @param classNm
 	 */
-	public static String build(String packageNm,
+	public String build(String packageNm,
 			                   Set<String> importJars, 
-							   List<String[]> fields, 
+							   List<TableFieldsVo> fields, 
 							   String classNm){
 		
 		StringBuffer sb = new StringBuffer();

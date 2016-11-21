@@ -4,6 +4,8 @@ import java.util.Set;
 
 import org.colin.common.enumClass.ImportJarEnum;
 import org.colin.common.util.MethodUtils;
+import org.colin.vo.TableFieldsVo;
+import org.springframework.stereotype.Service;
 
 /**
  * 
@@ -13,23 +15,24 @@ import org.colin.common.util.MethodUtils;
  * @author Colin
  *
  */
+@Service
 public class GenerateMybatisJavaBean {
 
 	
 
 	
-	private GenerateMybatisJavaBean(){
-		
-	}
+//	private GenerateMybatisJavaBean(){
+//		
+//	}
 	/**
 	 * 
 	 * @param importJars
 	 * @param fields
 	 * @param classNm
 	 */
-	public static String build(String packageNm,
+	public String build(String packageNm,
 							   Set<String> importJars, 
-							   List<String[]> fields, 
+							   List<TableFieldsVo> fields, 
 							   String classNm){
 		
 		StringBuffer sb = new StringBuffer();
@@ -45,23 +48,23 @@ public class GenerateMybatisJavaBean {
 		sb.append(MethodUtils.CAPS+"private static final long serialVersionUID = 1L;").append(MethodUtils.CHANGE_LINE);
 		sb.append(MethodUtils.CHANGE_LINE);
 		// create field
-		for(String[] field:fields){
-			String name = MethodUtils.removeSplitForField(field[0]);
-			String type = field[1];
+		for(TableFieldsVo field:fields){
+			String name = MethodUtils.removeSplitForField(field.getColumnNm());
+			String type = field.getJavaType();
 			sb.append(createField(name,type)).append(MethodUtils.CHANGE_LINE);
 		}		
 		sb.append(MethodUtils.CHANGE_LINE);
 		// create get
-		for(String[] field:fields){
-			String name = MethodUtils.removeSplitForField(field[0]);
-			String type = field[1];
+		for(TableFieldsVo field:fields){
+			String name = MethodUtils.removeSplitForField(field.getColumnNm());
+			String type = field.getJavaType();
 			sb.append(createGet(name,type)).append(MethodUtils.CHANGE_LINE);
 		}
 		sb.append(MethodUtils.CHANGE_LINE);
 		// create set
-		for(String[] field:fields){
-			String name = MethodUtils.removeSplitForField(field[0]);
-			String type = field[1];
+		for(TableFieldsVo field:fields){
+			String name = MethodUtils.removeSplitForField(field.getColumnNm());
+			String type = field.getJavaType();
 			sb.append(createSet(name,type)).append(MethodUtils.CHANGE_LINE);
 		}
 		sb.append(MethodUtils.CHANGE_LINE);
@@ -76,7 +79,7 @@ public class GenerateMybatisJavaBean {
 	 * @param type
 	 * @return
 	 */
-	private static String createField(String fieldNm,String type){
+	private String createField(String fieldNm,String type){
 		return MethodUtils.CAPS+"private "+type+" "+fieldNm+";";
 	}
 	/**
@@ -85,7 +88,7 @@ public class GenerateMybatisJavaBean {
 	 * @param type
 	 * @return
 	 */
-	private static String createGet(String fieldNm,String type){
+	private String createGet(String fieldNm,String type){
 //		public String getJavaType() {
 //			return javaType;
 //		}
@@ -99,7 +102,7 @@ public class GenerateMybatisJavaBean {
 	 * @param type
 	 * @return
 	 */
-	private static String createSet(String fieldNm,String type){
+	private String createSet(String fieldNm,String type){
 //		public void setJavaType(String javaType) {
 //			this.javaType = javaType;
 //		}

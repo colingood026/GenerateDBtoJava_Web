@@ -2,7 +2,10 @@ package org.colin.generate.mybatis.toLocal;
 import java.util.List;
 
 import org.colin.common.util.MethodUtils;
+import org.colin.vo.TableFieldsVo;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GenerateMybatisXml {
 
 	/**
@@ -11,8 +14,8 @@ public class GenerateMybatisXml {
 	 * @param classNm
 	 * @param tableNm
 	 */
-	public static String build(String packageNm,
-			                   List<String[]> fields, 
+	public String build(String packageNm,
+			                   List<TableFieldsVo> fields, 
 							   String classNm,
 							   String tableNm){		
 		
@@ -25,9 +28,9 @@ public class GenerateMybatisXml {
 		sb.append(MethodUtils.CAPS+"<resultMap type='"+classNm+"' id='"+classNm+"'>")
 															.append(MethodUtils.CHANGE_LINE);
 		// resultMap
-        for(String[] field:fields){
-        	String fieldNm = MethodUtils.removeSplitForField(field[0]);
-        	String columnNm = field[0].toUpperCase();
+        for(TableFieldsVo field:fields){
+        	String fieldNm = MethodUtils.removeSplitForField(field.getColumnNm());
+        	String columnNm = field.getJavaType().toUpperCase();
         	if(fieldNm.equals("id")){
         		sb.append(MethodUtils.DOUBLE_CAPS+"<id property='"+fieldNm+"' column='"+columnNm+"'/>")
         																.append(MethodUtils.CHANGE_LINE);
