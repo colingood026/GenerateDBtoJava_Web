@@ -17,6 +17,7 @@ import org.colin.common.enumClass.ImportJarEnum;
 import org.colin.common.enumClass.SqlTypeTransferEnum;
 import org.colin.vo.ConnDeatilVo;
 import org.colin.vo.JavaDataVo;
+import org.colin.vo.TableFieldsVo;
 
 /**
  * @author Colin
@@ -38,7 +39,7 @@ public class GetJavaDataByDBInfoUtil {
             // *
             Set<String> importJars = new HashSet<>();
             // *
-            List<String[]> fields = new ArrayList<>();
+            List<TableFieldsVo> fields = new ArrayList<>();
             try {
                 Class.forName(connDeatilVo.getDbDriverClassNm());
                 conn = DriverManager.getConnection(connDeatilVo.getUrl(), connDeatilVo.getUserNm(),
@@ -55,7 +56,9 @@ public class GetJavaDataByDBInfoUtil {
                     if (importJar != null) {
                         importJars.add(importJar);
                     }
-                    fields.add(new String[] { columnNm.toLowerCase(), javaType });
+                    TableFieldsVo tableFieldsVo = 
+                            new TableFieldsVo.Builder(columnNm.toLowerCase(), javaType).build();
+                    fields.add(tableFieldsVo);
                 }
 
                 // *

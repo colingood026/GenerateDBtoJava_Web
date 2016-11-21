@@ -15,7 +15,7 @@ public class JavaDataVo {
 	private final String classNm;
 	private final String tableNm;
 	private final Set<String> importJars;
-	private final List<String[]> fields;
+	private final List<TableFieldsVo> fields;
 	
 	
 	public String getClassNm() {
@@ -30,7 +30,7 @@ public class JavaDataVo {
 		return importJars;
 	}
 
-	public List<String[]> getFields() {
+	public List<TableFieldsVo> getFields() {
 		return fields;
 	}
 
@@ -45,7 +45,7 @@ public class JavaDataVo {
 		private final String classNm;
 		private final String tableNm;
 		private final Set<String> importJars;
-		private final List<String[]> fields;
+		private final List<TableFieldsVo> fields;
 		
 		/**
 		 * 
@@ -57,7 +57,7 @@ public class JavaDataVo {
 		public Builder(String classNm,
 					   String tableNm,
 					   Set<String> importJars,
-					   List<String[]> fields){
+					   List<TableFieldsVo> fields){
 			this.classNm = classNm;
 			this.tableNm = tableNm;
 			this.importJars = importJars;
