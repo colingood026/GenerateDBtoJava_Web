@@ -21,14 +21,14 @@ public class GenerateMybatisMapper {
 							   String classNm){
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append("package "+packageNm+".mapper").append(MethodUtils.CHANGE_LINE);
-		sb.append(ImportJarEnum.Annotation_Sprig_Repository.getImportName()).append(MethodUtils.CHANGE_LINE);
-		sb.append(ImportJarEnum.Annotation_Mybatis_Param.getImportName()).append(MethodUtils.CHANGE_LINE);
-		sb.append("@Repository").append(MethodUtils.CHANGE_LINE);
-		sb.append("public interface "+classNm+"Mapper{").append(MethodUtils.CHANGE_LINE);
+		sb.append("package "+packageNm+".mapper").append(MethodUtils.N);
+		sb.append(ImportJarEnum.Annotation_Sprig_Repository.getImportName()).append(MethodUtils.N);
+		sb.append(ImportJarEnum.Annotation_Mybatis_Param.getImportName()).append(MethodUtils.N);
+		sb.append("@Repository").append(MethodUtils.N);
+		sb.append("public interface "+classNm+"Mapper{").append(MethodUtils.N);
 		
 
-		sb.append(MethodUtils.CAPS+"public List<"+classNm+"> getAll();").append(MethodUtils.CHANGE_LINE);;
+		sb.append(MethodUtils.CAPS+"public List<"+classNm+"> getAll();").append(MethodUtils.N);;
 		
 		
 		sb.append("}");

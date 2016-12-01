@@ -29,8 +29,10 @@
                     var data = $('#insertForm').serialize();
 
                     data = data+'&tables='+allTables;
-
-                    $.post('<c:url value="/generateController/generate.do"/>',data,function(){
+                    
+                    var url = '/GenerateDBtoJava/generateController/generate.do';
+                    
+                    $.post(url,data,function(){
 
                     })                    
                 }else{

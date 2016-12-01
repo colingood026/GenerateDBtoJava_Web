@@ -25,7 +25,8 @@ public enum SqlTypeTransferEnum {
 	LONGVARBINARY("longvarbinary", "byte[]"),
 	DATETIME("datetime", "Date"),
 	DATE("date", "Date"),
-	TIME("time", "Date");
+	TIME("time", "Date"),
+	TEXT("text","String");
 	
 	private String sqlType;
 	private String javaType;	

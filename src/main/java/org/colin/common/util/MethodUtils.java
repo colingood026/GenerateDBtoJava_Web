@@ -4,7 +4,7 @@ public class MethodUtils {
 	
 	public static final String CAPS = "    ";
 	public static final String DOUBLE_CAPS = "        ";
-	public static final String CHANGE_LINE = "\n";
+	public static final String N = "\n";
 	
 	public static final String[] SPLITS = {"_"};
 	/**

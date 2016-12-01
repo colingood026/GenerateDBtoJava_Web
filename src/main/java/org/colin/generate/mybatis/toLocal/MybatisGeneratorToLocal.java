@@ -22,7 +22,7 @@ public class MybatisGeneratorToLocal {
     @Resource GenerateMybatisMapper myBatisMapperGenerator;
     @Resource GenerateMybatisXml myBatisXmlGenerator;
     
-    public void generate(ConnDeatilVo connDetail) {
+    public void generate(ConnDeatilVo connDetail) throws Exception {
         
 
         //

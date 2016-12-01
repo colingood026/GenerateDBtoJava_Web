@@ -1,0 +1,25 @@
+/**
+ * 
+ */
+package org.colin.common.Exception;
+
+/**
+ * @author colin.lee
+ *
+ */
+public class JavaTypeNotFoundException extends Exception{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public JavaTypeNotFoundException(String message){
+		super(message);
+	}
+	
+	public JavaTypeNotFoundException(String message,Throwable cause){
+		super(message,cause);
+	}
+
+}

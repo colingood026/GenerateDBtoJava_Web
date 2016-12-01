@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.colin.common.Exception.JavaTypeNotFoundException;
 import org.colin.common.enumClass.ImportJarEnum;
 import org.colin.common.enumClass.SqlTypeTransferEnum;
 import org.colin.vo.ConnDeatilVo;
@@ -24,10 +25,10 @@ import org.colin.vo.TableFieldsVo;
  *
  */
 public class GetJavaDataByDBInfoUtil {
-    public static List<JavaDataVo> getJavaDatas(ConnDeatilVo connDeatilVo) {
+    public static List<JavaDataVo> getJavaDatas(ConnDeatilVo connDeatilVo) throws Exception {
 
         List<JavaDataVo> javaDataVos = new ArrayList<>();
-
+        List<String> errorMsg = new ArrayList<>();
         Connection conn = null;
         ResultSet rs = null;
         DatabaseMetaData dma = null;
@@ -52,10 +53,23 @@ public class GetJavaDataByDBInfoUtil {
                     String columnNm = rs.getString("COLUMN_NAME");
                     String sqlType = rs.getString("TYPE_NAME");
                     String javaType = SqlTypeTransferEnum.getJavaTypeBySqlType(sqlType);
+                    if(javaType == null){
+                    	String javaTypeNotFound = "javaType is NULL when:"+MethodUtils.N+
+                    							  "columnNm="+columnNm+MethodUtils.N+
+                    							  "sqlType="+sqlType+MethodUtils.N;
+                        
+                    	errorMsg.add(javaTypeNotFound);
+                    	continue;
+                    }
                     String importJar = ImportJarEnum.getImportStrByTypeName(javaType);
                     if (importJar != null) {
                         importJars.add(importJar);
                     }
+                    
+                    if(errorMsg.size() > 0){
+                    	throw new JavaTypeNotFoundException(errorMsg.toString());
+                    }
+                    
                     TableFieldsVo tableFieldsVo = 
                             new TableFieldsVo.Builder(columnNm.toLowerCase(), javaType).build();
                     fields.add(tableFieldsVo);

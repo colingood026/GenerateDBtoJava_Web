@@ -3,7 +3,9 @@ package org.colin.controller;
 
 import javax.annotation.Resource;
 
+import org.colin.common.Exception.JavaTypeNotFoundException;
 import org.colin.common.enumClass.OrMappingEnum;
+import org.colin.common.util.ExceptionRecoedUtil;
 import org.colin.generate.mybatis.toLocal.MybatisGeneratorToLocal;
 import org.colin.vo.ConnDeatilVo;
 import org.springframework.stereotype.Controller;
@@ -33,7 +35,13 @@ public class GenerateController {
                 new ConnDeatilVo(url, userNm, psd, tables, dbDriverClassNm,orMappingType,savedLocation);
         
         if(orMappingType.equals(OrMappingEnum.Mybatis.getOrMappingName())){
-            mybatisGeneratorToLocal.generate(connDeatilVo);
+            try {
+				mybatisGeneratorToLocal.generate(connDeatilVo);
+			} catch (JavaTypeNotFoundException e) {				
+				System.out.println("Exception:"+e.getMessage());
+			} catch(Exception e){
+				System.out.println(ExceptionRecoedUtil.recordException(e));
+			}
         }else{
             System.out.println("hibernate");
         }

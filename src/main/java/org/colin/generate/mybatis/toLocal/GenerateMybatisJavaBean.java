@@ -36,38 +36,38 @@ public class GenerateMybatisJavaBean {
 							   String classNm){
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append("package "+packageNm+".model").append(MethodUtils.CHANGE_LINE);
+		sb.append("package "+packageNm+".model").append(MethodUtils.N);
 		for(String importJar:importJars){			
-			sb.append(importJar).append(MethodUtils.CHANGE_LINE);
+			sb.append(importJar).append(MethodUtils.N);
 		}
-		sb.append(ImportJarEnum.Annotation_Mybatis_Alias.getImportName()).append(MethodUtils.CHANGE_LINE);
-		sb.append(MethodUtils.CHANGE_LINE);
-		sb.append("@Alias(\""+classNm+"\")").append(MethodUtils.CHANGE_LINE);
-		sb.append("public class "+classNm+" implements Serializable{").append(MethodUtils.CHANGE_LINE);
-		sb.append(MethodUtils.CHANGE_LINE);
-		sb.append(MethodUtils.CAPS+"private static final long serialVersionUID = 1L;").append(MethodUtils.CHANGE_LINE);
-		sb.append(MethodUtils.CHANGE_LINE);
+		sb.append(ImportJarEnum.Annotation_Mybatis_Alias.getImportName()).append(MethodUtils.N);
+		sb.append(MethodUtils.N);
+		sb.append("@Alias(\""+classNm+"\")").append(MethodUtils.N);
+		sb.append("public class "+classNm+" implements Serializable{").append(MethodUtils.N);
+		sb.append(MethodUtils.N);
+		sb.append(MethodUtils.CAPS+"private static final long serialVersionUID = 1L;").append(MethodUtils.N);
+		sb.append(MethodUtils.N);
 		// create field
 		for(TableFieldsVo field:fields){
 			String name = MethodUtils.removeSplitForField(field.getColumnNm());
 			String type = field.getJavaType();
-			sb.append(createField(name,type)).append(MethodUtils.CHANGE_LINE);
+			sb.append(createField(name,type)).append(MethodUtils.N);
 		}		
-		sb.append(MethodUtils.CHANGE_LINE);
+		sb.append(MethodUtils.N);
 		// create get
 		for(TableFieldsVo field:fields){
 			String name = MethodUtils.removeSplitForField(field.getColumnNm());
 			String type = field.getJavaType();
-			sb.append(createGet(name,type)).append(MethodUtils.CHANGE_LINE);
+			sb.append(createGet(name,type)).append(MethodUtils.N);
 		}
-		sb.append(MethodUtils.CHANGE_LINE);
+		sb.append(MethodUtils.N);
 		// create set
 		for(TableFieldsVo field:fields){
 			String name = MethodUtils.removeSplitForField(field.getColumnNm());
 			String type = field.getJavaType();
-			sb.append(createSet(name,type)).append(MethodUtils.CHANGE_LINE);
+			sb.append(createSet(name,type)).append(MethodUtils.N);
 		}
-		sb.append(MethodUtils.CHANGE_LINE);
+		sb.append(MethodUtils.N);
 		sb.append("}");
 		
 		return sb.toString();
@@ -108,8 +108,8 @@ public class GenerateMybatisJavaBean {
 //		}
 		String firstChar = fieldNm.substring(0, 1);
 		String set = "set"+firstChar.toUpperCase()+fieldNm.substring(1);
-		return MethodUtils.CAPS+"public void "+set+"("+type+" "+fieldNm+"){"+MethodUtils.CHANGE_LINE+MethodUtils.DOUBLE_CAPS+
-										"this."+fieldNm+" = "+fieldNm+";"+MethodUtils.CHANGE_LINE+MethodUtils.CAPS+"}";
+		return MethodUtils.CAPS+"public void "+set+"("+type+" "+fieldNm+"){"+MethodUtils.N+MethodUtils.DOUBLE_CAPS+
+										"this."+fieldNm+" = "+fieldNm+";"+MethodUtils.N+MethodUtils.CAPS+"}";
 		
 	}
 	
