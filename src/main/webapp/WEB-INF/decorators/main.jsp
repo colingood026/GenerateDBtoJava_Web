@@ -9,7 +9,8 @@
     <link rel="stylesheet" href='<c:url value="/jQuery/jquery-datatable/css/jquery.dataTables.css"/>'>    
     <script src='<c:url value="/jQuery/js/jquery-3.1.1.js"/>'></script>
     <script src='<c:url value="/jQuery/jquery-datatable/js/jquery.dataTables.js"/>'></script>
-    <script src='<c:url value="/bootstrap/js/bootstrap.min.js"/>'></script> 
+    <script src='<c:url value="/bootstrap/js/bootstrap.min.js"/>'></script>
+    <script src='<c:url value="/js/OrgColinUtil.js"/>'></script>
 <title>Insert title here</title>
     
 <decorator:head/>

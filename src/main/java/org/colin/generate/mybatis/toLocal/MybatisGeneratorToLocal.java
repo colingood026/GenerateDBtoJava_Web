@@ -6,9 +6,11 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-
 import org.colin.common.util.ExportToLocalUtil;
 import org.colin.common.util.GetJavaDataByDBInfoUtil;
+import org.colin.generate.DaoGenerator;
+import org.colin.generate.JavaBeanGenerator;
+import org.colin.generate.XmlGenerator;
 import org.colin.vo.ConnDeatilVo;
 import org.colin.vo.JavaDataVo;
 import org.colin.vo.TableFieldsVo;
@@ -18,9 +20,12 @@ import org.springframework.stereotype.Service;
 public class MybatisGeneratorToLocal {
     
     
-    @Resource GenerateMybatisJavaBean myBatisBeanGenerator;
-    @Resource GenerateMybatisMapper myBatisMapperGenerator;
-    @Resource GenerateMybatisXml myBatisXmlGenerator;
+    @Resource(name="mybatisJavaBeanGenerator") 
+    JavaBeanGenerator mybatisJavaBeanGenerator;
+    @Resource(name="mybatisDaoGenerator") 
+    DaoGenerator mybatisDaoGenerator;
+    @Resource(name="mybatisXmlGenerator") 
+    XmlGenerator mybatisXmlGenerator;
     
     public void generate(ConnDeatilVo connDetail) throws Exception {
         
@@ -40,13 +45,13 @@ public class MybatisGeneratorToLocal {
                 String tableNm = vo.getTableNm();
                 List<TableFieldsVo> fields = vo.getFields();
                 //
-                String bean = myBatisBeanGenerator.build(packageNm, importJars, fields, classNm);
+                String bean = mybatisJavaBeanGenerator.buildBean(packageNm, importJars, fields, classNm);
                 ExportToLocalUtil.exportBean(location, classNm, bean);
                 //
-                String mapper = myBatisMapperGenerator.build(packageNm, importJars, fields, classNm);
+                String mapper = mybatisDaoGenerator.buildDao(packageNm, importJars, fields, classNm);
                 ExportToLocalUtil.exportMapper(location, classNm, mapper);
                 //
-                String xml = myBatisXmlGenerator.build(packageNm, fields, classNm, tableNm);
+                String xml = mybatisXmlGenerator.buildXml(packageNm, fields, classNm, tableNm);
                 ExportToLocalUtil.exportXml(location, classNm, xml);
                 //
                 System.out.println("****************************************");

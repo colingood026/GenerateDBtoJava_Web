@@ -1,9 +1,15 @@
 package org.colin.controller;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
-import org.colin.common.Exception.JavaTypeNotFoundException;
+import org.colin.common.Exception.OrgColinException;
+import org.colin.common.enumClass.DriverClassEnum;
 import org.colin.common.enumClass.OrMappingEnum;
 import org.colin.common.util.ExceptionRecoedUtil;
 import org.colin.generate.mybatis.toLocal.MybatisGeneratorToLocal;
@@ -19,36 +25,64 @@ public class GenerateController {
 
     
     @Resource MybatisGeneratorToLocal mybatisGeneratorToLocal;
+ 
     
-    
-    @RequestMapping("/generate.do")
+    @RequestMapping(value = "/generate.do", produces = "application/json")
     @ResponseBody
-    public void generate(@RequestParam(required=true) String dbDriverClassNm,
-                         @RequestParam(required=true) String url,
+    public Map<String,String> generate(@RequestParam(required=true) String dbDriverClassNm,
+                         @RequestParam(required=true) String host,
+                         @RequestParam(required=true) Integer port,
+                         @RequestParam(required=true) String dbName,
                          @RequestParam(required=true) String userNm,
                          @RequestParam(required=true) String psd,
                          @RequestParam(required=true) String tables,
                          @RequestParam(required=true) String orMappingType,
                          @RequestParam(required=true) String savedLocation){
+        Map<String,String> result = new HashMap<>();;
+        String message = "檔案匯出成功";
         
-        ConnDeatilVo connDeatilVo = 
-                new ConnDeatilVo(url, userNm, psd, tables, dbDriverClassNm,orMappingType,savedLocation);
+        ConnDeatilVo connDeatilVo = new ConnDeatilVo(host,
+                                                     port,
+                                                     dbName,
+                                                     userNm,
+                                                     psd,
+                                                     tables,
+                                                     dbDriverClassNm,
+                                                     orMappingType,
+                                                     savedLocation);
         
         if(orMappingType.equals(OrMappingEnum.Mybatis.getOrMappingName())){
             try {
 				mybatisGeneratorToLocal.generate(connDeatilVo);
-			} catch (JavaTypeNotFoundException e) {				
+			} catch (OrgColinException e) {				
 				System.out.println("Exception:"+e.getMessage());
+				message = e.getMessage();
 			} catch(Exception e){
 				System.out.println(ExceptionRecoedUtil.recordException(e));
+				message = "唉唷，出錯嘍~";
 			}
         }else{
             System.out.println("hibernate");
+        }        
+        result.put("message", message);
+        return result;
+    }
+    
+    @RequestMapping(value = "/getJdbcUrlPrefix.do", produces = "application/json")
+    @ResponseBody
+    public List<Map<String,String>> getJdbcUrlPrefix(){
+        
+        List<Map<String,String>> list = new ArrayList<>();
+        
+        for(DriverClassEnum a:DriverClassEnum.values()){
+            Map<String,String> map = new HashMap<>();
+            map.put(a.getDbNm(), a.getUrlPrefix()+","+a.getDefaultPort());
+            list.add(map);
         }
         
-        
-        
+        return list;
     }
+    
 
     
 }

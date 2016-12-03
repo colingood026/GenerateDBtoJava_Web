@@ -5,9 +5,9 @@ package org.colin.common.Exception;
 
 /**
  * @author colin.lee
- *
+ * sql型別轉換java型別時發生錯誤
  */
-public class JavaTypeNotFoundException extends Exception{
+public class JavaTypeNotFoundException extends OrgColinException{
 
 	/**
 	 * 

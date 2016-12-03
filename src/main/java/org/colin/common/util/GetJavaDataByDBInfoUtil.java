@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.colin.common.Exception.DbConnectionException;
 import org.colin.common.Exception.JavaTypeNotFoundException;
 import org.colin.common.enumClass.ImportJarEnum;
 import org.colin.common.enumClass.SqlTypeTransferEnum;
@@ -74,7 +75,9 @@ public class GetJavaDataByDBInfoUtil {
                             new TableFieldsVo.Builder(columnNm.toLowerCase(), javaType).build();
                     fields.add(tableFieldsVo);
                 }
-
+                if(fields.size() == 0){
+                    throw new DbConnectionException("no field set");
+                }
                 // *
                 String classNm = MethodUtils.removeSplitForClassNm(tableNm.toLowerCase());
 
