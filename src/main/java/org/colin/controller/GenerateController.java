@@ -30,26 +30,29 @@ public class GenerateController {
     @RequestMapping(value = "/generate.do", produces = "application/json")
     @ResponseBody
     public Map<String,String> generate(@RequestParam(required=true) String dbDriverClassNm,
-                         @RequestParam(required=true) String host,
-                         @RequestParam(required=true) Integer port,
-                         @RequestParam(required=true) String dbName,
-                         @RequestParam(required=true) String userNm,
-                         @RequestParam(required=true) String psd,
-                         @RequestParam(required=true) String tables,
-                         @RequestParam(required=true) String orMappingType,
-                         @RequestParam(required=true) String savedLocation){
+                                       @RequestParam(required=true) String host,
+                                       @RequestParam(required=true) Integer port,
+                                       @RequestParam(required=true) String dbName,
+                                       @RequestParam(required=true) String userNm,
+                                       @RequestParam(required=true) String psd,
+                                       @RequestParam(required=true) String tables,
+                                       @RequestParam(required=true) String orMappingType,
+                                       @RequestParam(required=true) String savedLocation,
+                                       @RequestParam(required=true) String daoPackageRoot,
+                                       @RequestParam(required=true) String modelPackageRoot){
         Map<String,String> result = new HashMap<>();;
         String message = "檔案匯出成功";
         
-        ConnDeatilVo connDeatilVo = new ConnDeatilVo(host,
-                                                     port,
-                                                     dbName,
-                                                     userNm,
-                                                     psd,
-                                                     tables,
-                                                     dbDriverClassNm,
-                                                     orMappingType,
-                                                     savedLocation);
+        ConnDeatilVo connDeatilVo = new ConnDeatilVo();
+        connDeatilVo.setDbDriverClassNm(dbDriverClassNm);
+        connDeatilVo.setOrMappingType(orMappingType);
+        connDeatilVo.setPsd(psd);
+        connDeatilVo.setSaveLocation(savedLocation);
+        connDeatilVo.setTables(tables);
+        connDeatilVo.setUrl(dbDriverClassNm, host, port, dbName);
+        connDeatilVo.setUserNm(userNm);
+        connDeatilVo.setDaoPackageRoot(daoPackageRoot);
+        connDeatilVo.setModelPackageRoot(modelPackageRoot);
         
         if(orMappingType.equals(OrMappingEnum.Mybatis.getOrMappingName())){
             try {

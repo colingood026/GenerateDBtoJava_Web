@@ -71,8 +71,10 @@ public class GetJavaDataByDBInfoUtil {
                     	throw new JavaTypeNotFoundException(errorMsg.toString());
                     }
                     
-                    TableFieldsVo tableFieldsVo = 
-                            new TableFieldsVo.Builder(columnNm.toLowerCase(), javaType).build();
+                    TableFieldsVo tableFieldsVo = new TableFieldsVo.Builder(columnNm.toLowerCase(), 
+                                                                            javaType,
+                                                                            connDeatilVo.getDaoPackageRoot(),
+                                                                            connDeatilVo.getModelPackageRoot()).build();
                     fields.add(tableFieldsVo);
                 }
                 if(fields.size() == 0){

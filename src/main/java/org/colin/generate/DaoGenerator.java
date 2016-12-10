@@ -16,13 +16,13 @@ public interface DaoGenerator {
 
     /**
      * 
-     * @param packageNm
+     * @param daoPackageRoot
      * @param importJars
      * @param fields
      * @param classNm
      * @return
      */
-    public String buildDao(String packageNm,
+    public String buildDao(String daoPackageRoot,
                            Set<String> importJars, 
                            List<TableFieldsVo> fields, 
                            String classNm);

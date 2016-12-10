@@ -10,20 +10,16 @@ import org.springframework.stereotype.Service;
 
 @Service("mybatisDaoGenerator")
 public class MybatisDaoGenerator implements DaoGenerator{
-	/**
-	 * 
-	 * @param importJars
-	 * @param fields
-	 * @param classNm
-	 */
+
+    
     @Override
-	public String buildDao(String packageNm,
-			                   Set<String> importJars, 
-							   List<TableFieldsVo> fields, 
-							   String classNm){
+	public String buildDao(String daoPackageRoot,
+			               Set<String> importJars, 
+						   List<TableFieldsVo> fields, 
+						   String classNm){
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append("package "+packageNm+".mapper").append(MethodUtils.N);
+		sb.append("package "+daoPackageRoot+";").append(MethodUtils.N);
 		sb.append(ImportJarEnum.Annotation_Sprig_Repository.getImportName()).append(MethodUtils.N);
 		sb.append(ImportJarEnum.Annotation_Mybatis_Param.getImportName()).append(MethodUtils.N);
 		sb.append("@Repository").append(MethodUtils.N);

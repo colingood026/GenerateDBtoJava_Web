@@ -16,13 +16,13 @@ public interface XmlGenerator {
     
     /**
      * 
-     * @param packageNm
+     * @param daoPackageRoot
      * @param fields
      * @param classNm
      * @param tableNm
      * @return
      */
-    public String buildXml(String packageNm,
+    public String buildXml(String daoPackageRoot,
                            List<TableFieldsVo> fields, 
                            String classNm,
                            String tableNm);

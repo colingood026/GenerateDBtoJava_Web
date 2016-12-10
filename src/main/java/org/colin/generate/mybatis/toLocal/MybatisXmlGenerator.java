@@ -9,23 +9,18 @@ import org.springframework.stereotype.Service;
 @Service("mybatisXmlGenerator")
 public class MybatisXmlGenerator implements XmlGenerator{
 
-	/**
-	 * 
-	 * @param fields
-	 * @param classNm
-	 * @param tableNm
-	 */
+
     @Override
-	public String buildXml(String packageNm,
-			                   List<TableFieldsVo> fields, 
-							   String classNm,
-							   String tableNm){		
+	public String buildXml(String daoPackageRoot,
+			               List<TableFieldsVo> fields, 
+			               String classNm,
+						   String tableNm){		
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("<?xml version='1.0' encoding='UTF-8' ?>").append(MethodUtils.N);;
 		sb.append("<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'"
 				+ " 'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>").append(MethodUtils.N);
-		sb.append("<mapper namespace='"+packageNm+".mapper."+classNm+"'>").append(MethodUtils.N);
+		sb.append("<mapper namespace='"+daoPackageRoot+"."+classNm+"Mapper'>").append(MethodUtils.N);
 		
 		sb.append(MethodUtils.CAPS+"<resultMap type='"+classNm+"' id='"+classNm+"'>")
 															.append(MethodUtils.N);

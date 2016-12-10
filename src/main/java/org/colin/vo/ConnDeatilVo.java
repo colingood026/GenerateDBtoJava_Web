@@ -9,59 +9,65 @@ import org.colin.common.enumClass.OrMappingEnum;
  */
 public class ConnDeatilVo {
     
-	private String url; // urlPrefix + host + port + schema(databasename)
-	private String host;
-	private Integer port;
-	private String dbName;
+    /**
+     * urlPrefix + host + port + schema(databasename)
+     */
+	private String url;
+	/**
+	 * 資料庫IP
+	 */
+//	private String host;
+	/**
+	 * 資料庫port
+	 */
+//	private Integer port;
+	/**
+	 * 
+	 */
+//	private String dbName;
+	/**
+	 * 
+	 */
 	private String userNm;
+	/**
+	 * 
+	 */
 	private String psd;
+	/**
+	 * 要generate的tables(","分隔)
+	 */
 	private String tables;
+	/**
+	 * 
+	 */
 	private String dbDriverClassNm;
+	/**
+	 * 使用的ormapping類型
+	 */
 	private String orMappingType;
-	private String saveLocation;
+	/**
+	 * 產出資料的存檔位置
+	 */
+	private String saveLocation; 
+	/**
+	 * 
+	 */
+    private String daoPackageRoot;
+    /**
+     * 
+     */
+    private String modelPackageRoot;
 	
 	
 	public ConnDeatilVo(){}
 
 	/**
 	 * 
-	 * @param host:資料庫IP
-	 * @param port:資料庫port
-	 * @param dbName
-	 * @param userNm
-	 * @param psd
-	 * @param tables：要generate的tables(","分隔)
 	 * @param dbDriverClassNm
-	 * @param orMappingType：使用的ormapping類型
-	 * @param saveLocation：產出資料的存檔位置
+	 * @param host
+	 * @param port
+	 * @param dbName
 	 */
-	public ConnDeatilVo(String host,
-	                    Integer port,
-	                    String dbName,
-	                    String userNm,
-	                    String psd,
-	                    String tables,
-	                    String dbDriverClassNm,
-	                    String orMappingType,
-	                    String saveLocation){
-	    // jdbc:sqlserver://192.168.128.159:1433;databaseName=CTBC_SM
-	    // jdbc:sqlserver://192.168.128.159;databaseName=CTBC_SM
-	    if(port == null){
-	        this.url = DriverClassEnum.getClassNmByDbNm(dbDriverClassNm).getUrlPrefix()+
-	                   host+";databaseName="+dbName;
-	    }else{
-	        this.url = DriverClassEnum.getClassNmByDbNm(dbDriverClassNm).getUrlPrefix()+
-	                   host+":"+port+";databaseName="+dbName;
-	    }
-
-	    this.userNm = userNm;
-	    this.psd = psd;
-	    this.tables = tables;
-	    this.dbDriverClassNm = DriverClassEnum.getClassNmByDbNm(dbDriverClassNm).getClassNm();
-	    this.orMappingType = OrMappingEnum.getOrMappingByName(orMappingType);
-	    this.saveLocation = saveLocation;
-	}
-
 	public void setUrl(String dbDriverClassNm,
 	                   String host,
 	                   Integer port,
@@ -83,30 +89,6 @@ public class ConnDeatilVo {
 
     public void setPsd(String psd) {
         this.psd = psd;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public Integer getPort() {
-        return port;
-    }
-
-    public void setPort(Integer port) {
-        this.port = port;
-    }
-
-    public String getDbName() {
-        return dbName;
-    }
-
-    public void setDbName(String dbName) {
-        this.dbName = dbName;
     }
 
     public void setTables(String tables) {
@@ -162,6 +144,28 @@ public class ConnDeatilVo {
     public void setOrMappingType(String orMappingType) {
         this.orMappingType = OrMappingEnum.getOrMappingByName(orMappingType);
     }
+
+    public String getDaoPackageRoot() {
+        return daoPackageRoot;
+    }
+
+    public void setDaoPackageRoot(String daoPackageRoot) {
+        this.daoPackageRoot = daoPackageRoot;
+    }
+
+    public String getModelPackageRoot() {
+        return modelPackageRoot;
+    }
+
+    public void setModelPackageRoot(String modelPackageRoot) {
+        this.modelPackageRoot = modelPackageRoot;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+
 
 	
 

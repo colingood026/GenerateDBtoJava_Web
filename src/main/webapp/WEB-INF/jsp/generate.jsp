@@ -17,6 +17,7 @@
         .submitBtnDiv{
             margin:10px
         }
+      
     </style>    
     <script>
         
@@ -123,19 +124,31 @@
 
         
         function addRow(){
-            $('#example').append(
-                $('<tr>').append(
-                    $('<th>') 
+            
+//            <div class="form-group row">
+//                <label class="col-xs-2 col-form-label"></label>
+//                <div class="col-xs-2">
+//                    <input class="form-control" type='text' title='table'/>
+//                </div>
+//                <button type='button' onclick='addRow()'>
+//                    <i class='glyphicon glyphicon-trash'></i>
+//                </button>                
+//            </div>            
+            
+            $('#insertForm').append(
+                
+                $('<div>').attr('class','form-group row').append(
+                    $('<label>').attr('class','col-xs-2 col-form-label')                
                 ).append(
-                    $('<td>').append(
-                        $('<input>').attr('type','text').attr('title','table')
-                    ).append(
-                        $('<button>').attr('type','button').click(function(){
-                            $(this).parents('tr:first').remove();
-                        }).append(
-                            $('<i>').attr('class','glyphicon glyphicon-trash')
-                        )                    
-                    )                    
+                    $('<div>').attr('class','col-xs-2').append(
+                        $('<input>').attr('type','text').attr('title','table').attr('class','form-control')
+                    )
+                ).append(
+                    $('<button>').attr('type','button').attr('class','btn btn-danger').click(function(){
+                        $(this).parents('div[class="form-group row"]:first').remove();
+                    }).append(
+                        $('<i>').attr('class','glyphicon glyphicon-trash')
+                    )                
                 )
             );
             
@@ -157,17 +170,19 @@
             var classNm = $('#insertForm input[name="dbDriverClassNm"]').val();
             var ormapping = $('#insertForm input[name="orMappingType"]').val();
             var host = $('#insertForm input[name="host"]').val();
-            var port = $('#insertForm input[name="port"]').val();
             var dbName = $('#insertForm input[name="dbName"]').val();
             var location = $('#insertForm input[name="savedLocation"]').val();
             var nm = $('#insertForm input[name="userNm"]').val();
             var psd = $('#insertForm input[name="psd"]').val();
             var tables = $('#insertForm input[title="table"]');
+            var daoPackageRoot = $('#insertForm input[title="daoPackageRoot"]');
+            var modelPackageRoot = $('#insertForm input[title="modelPackageRoot"]');
             
             var isEmpty = $.isEmptyObject(classNm) || $.isEmptyObject(ormapping) ||
-                          $.isEmptyObject(host) || $.isEmptyObject(port) ||
-                          $.isEmptyObject(dbName) || $.isEmptyObject(location) || 
-                          $.isEmptyObject(nm) || $.isEmptyObject(psd);
+                          $.isEmptyObject(host) || $.isEmptyObject(dbName) || 
+                          $.isEmptyObject(location) || $.isEmptyObject(nm) || 
+                          $.isEmptyObject(psd) || $.isEmptyObject(daoPackageRoot) ||
+                          $.isEmptyObject(modelPackageRoot);
             
             var isTableEmpty = true;
             tables.each(function(){
@@ -190,93 +205,111 @@
 <body>
     
     <div class='mainDiv'>
-        <div class='submitBtnDiv'>
-            <button type='button' class='btn btn-primary' id='submitBt'>
-                Submit
-            </button>
-        </div>
+
         <form id='insertForm'>
-            <table id="example" class="table" cellspacing="0">
-                <tr>
-                    <th>資料庫類型</th>
-                    <td>
-                        <label>
-                            <input type='radio' name='dbDriverClassNm' value='msSql' checked/>
-                            &nbsp;<span>MSSQL</span>
-                        </label>
-<!--
-                        &nbsp;&nbsp;
-                        <label>
-                            <input type='radio' name='dbDriverClassNm' value='mySql'/>
-                            &nbsp;<span>MySql</span>                            
-                        </label>
--->
-                    </td>                
-                </tr>
-                <tr>
-                    <th>OrMapping類型</th>
-                    <td>
-                        <label>
-                            <input type='radio' name='orMappingType' value='mybatis' checked/>
-                            &nbsp;<span>Mybatis</span>
-                        </label>
-                        &nbsp;&nbsp;
-                        <label>
-                            <input type='radio' name='orMappingType' value='hibernate'/>
-                            &nbsp;<span>Hibernate</span>                            
-                        </label>
+            <div class="form-group row">            
+                <div class='submitBtnDiv'>
+                    <button type='button' class='btn btn-primary' id='submitBt'>                        
+                        <span>Submit</span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">資料庫類型</label>
+                <div class="col-xs-10">
+                    <label class="custom-control custom-radio">
+                        <input class="custom-control-input" type='radio' name='dbDriverClassNm' value='msSql' checked/>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">MSSQL</span>                        
+                    </label>
 
-                    </td>                
-                </tr>                
-                <tr>
-                    <th>JDBC URL</th>
-                    <td colspan='4'>
-                        <input type='text' style='width:500px' name='url' readonly/>
-                    </td>                
-                </tr>
-                <tr>
-                    <th>Host</th>
-                    <td >
-                        <input type='text' style='width:200px' name='host' class="numberAndDotOnly"/>
-                        &nbsp;&nbsp;<span style="font-weight:bold;">Port:</span>
-                        <input type='text' style='width:100px' name='port' class="numberOnly"/>
-                    </td>                    
-                </tr>
-                <tr>
-                    <th>Database/Schema</th>
-                    <td >
-                        <input type='text' style='width:200px' name='dbName' />
-                    </td>                   
-                </tr>                
-                <tr>
-                    <th>資料產出位置</th>
-                    <td colspan='4'>
-                        <input type='text' style='width:500px' name='savedLocation'/>
-                    </td>                
-                </tr>                
-                <tr>
-                    <th>帳號</th>
-                    <td>
-                        <input type='text' name='userNm' />
-                    </td>
-                    <th>密碼</th>
-                    <td>
-                        <input type='text' name='psd'/>
-                    </td>                
-                
-                </tr>
-                <tr>
-                    <th>Table名稱</th>
-                    <td>
-                        <input type='text' title='table'/>
-                        <button type='button' onclick='addRow()'>
-                            <i class='glyphicon glyphicon-plus'></i>
-                        </button>                        
-                    </td>
+                    <label class="custom-control custom-radio">
+                        <input class="custom-control-input" type='radio' name='dbDriverClassNm' value='mySql'/>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">MySql</span>                        
+                    </label>                    
+                </div>                
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">OrMapping類型</label>
+                <div class="col-xs-10">
+                    <label>
+                        <input class="form-check-input" type='radio' name='orMappingType' value='mybatis' checked/>
 
-                </tr>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Mybatis</span>                        
+                    </label>
 
-            </table>
+                    <label>
+                        <input class="form-check-input" type='radio' name='orMappingType' value='hibernate'/>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Hibernate</span>                        
+                    </label>                    
+                </div>                
+            </div>   
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">JDBC URL</label>
+                <div class="col-xs-4">
+                    <input class="form-control" type='text' name='url' readonly/>                   
+                </div>                
+            </div>            
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Host</label>
+                <div class="col-xs-2">
+                    <input class="form-control numberAndDotOnly" type='text' name='host' />
+                </div>                
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Port:</label>
+                <div class="col-xs-1">
+                    <input class="form-control numberOnly" type='text' name='port' />
+                </div>                
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Database/Schema</label>
+                <div class="col-xs-3">
+                    <input class="form-control" type='text' name='dbName' />
+                </div>               
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">資料產出位置</label>
+                <div class="col-xs-5">
+                    <input class="form-control" type='text' style='width:500px' name='savedLocation'/>
+                </div>               
+            </div> 
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">帳號</label>
+                <div class="col-xs-2">
+                    <input class="form-control" type='text' name='userNm' />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">密碼</label>
+                <div class="col-xs-2">
+                    <input class="form-control" type='text' name='psd'/>
+                </div>                
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">DaoPackageRoot</label>
+                <div class="col-xs-2">
+                    <input class="form-control" type='text' name='daoPackageRoot'/>
+                </div>                
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">ModelPackageRoot</label>
+                <div class="col-xs-2">
+                    <input class="form-control" type='text' name='modelPackageRoot'/>
+                </div>                
+            </div>            
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Table名稱</label>
+                <div class="col-xs-2">
+                    <input class="form-control" type='text' title='table'/>
+                </div>    
+                <button type='button' class='btn btn-success' onclick='addRow()'>
+                    <i class='glyphicon glyphicon-plus'></i>
+                </button>                
+            </div>
         </form>
     </div>
       

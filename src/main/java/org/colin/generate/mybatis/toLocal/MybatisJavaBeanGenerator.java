@@ -22,23 +22,16 @@ public class MybatisJavaBeanGenerator implements JavaBeanGenerator{
 	
 
 	
-//	private GenerateMybatisJavaBean(){
-//		
-//	}
-	/**
-	 * 
-	 * @param importJars
-	 * @param fields
-	 * @param classNm
-	 */
+
+
     @Override
-	public String buildBean(String packageNm,
-							   Set<String> importJars, 
-							   List<TableFieldsVo> fields, 
-							   String classNm){
+	public String buildBean(String modelPackageRoot,
+    					    Set<String> importJars, 
+    					    List<TableFieldsVo> fields, 
+    					    String classNm){
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append("package "+packageNm+".model").append(MethodUtils.N);
+		sb.append("package " + modelPackageRoot + ";").append(MethodUtils.N);
 		for(String importJar:importJars){			
 			sb.append(importJar).append(MethodUtils.N);
 		}
