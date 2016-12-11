@@ -36,7 +36,6 @@ public class MybatisGeneratorToLocal {
         String location = connDetail.getSaveLocation();
         location = ExportToLocalUtil.createDirectory(location);
         location = location.replaceAll("\\\\", "/");
-//        String packageNm = location.split("/")[1];
 
         if (location != null) {
             for (JavaDataVo vo : javaDataVos) {
@@ -45,22 +44,13 @@ public class MybatisGeneratorToLocal {
                 String tableNm = vo.getTableNm();
                 List<TableFieldsVo> fields = vo.getFields();
                 //
-                String bean = mybatisJavaBeanGenerator.buildBean(connDetail.getModelPackageRoot(), 
-                                                                 importJars, 
-                                                                 fields, 
-                                                                 classNm);
+                String bean = mybatisJavaBeanGenerator.buildBean(importJars,fields,classNm);
                 ExportToLocalUtil.exportBean(location, classNm, bean);
                 //
-                String mapper = mybatisDaoGenerator.buildDao(connDetail.getDaoPackageRoot(), 
-                                                             importJars, 
-                                                             fields, 
-                                                             classNm);
+                String mapper = mybatisDaoGenerator.buildDao(importJars,fields,classNm);
                 ExportToLocalUtil.exportMapper(location, classNm, mapper);
                 //
-                String xml = mybatisXmlGenerator.buildXml(connDetail.getDaoPackageRoot(), 
-                                                          fields, 
-                                                          classNm, 
-                                                          tableNm);                
+                String xml = mybatisXmlGenerator.buildXml(fields,classNm,tableNm);                
                 ExportToLocalUtil.exportXml(location, classNm, xml);
                 //
                 System.out.println("****************************************");

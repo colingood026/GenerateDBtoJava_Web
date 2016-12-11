@@ -49,15 +49,6 @@ public class ConnDeatilVo {
 	 * 產出資料的存檔位置
 	 */
 	private String saveLocation; 
-	/**
-	 * 
-	 */
-    private String daoPackageRoot;
-    /**
-     * 
-     */
-    private String modelPackageRoot;
-	
 	
 	public ConnDeatilVo(){}
 
@@ -143,22 +134,6 @@ public class ConnDeatilVo {
 
     public void setOrMappingType(String orMappingType) {
         this.orMappingType = OrMappingEnum.getOrMappingByName(orMappingType);
-    }
-
-    public String getDaoPackageRoot() {
-        return daoPackageRoot;
-    }
-
-    public void setDaoPackageRoot(String daoPackageRoot) {
-        this.daoPackageRoot = daoPackageRoot;
-    }
-
-    public String getModelPackageRoot() {
-        return modelPackageRoot;
-    }
-
-    public void setModelPackageRoot(String modelPackageRoot) {
-        this.modelPackageRoot = modelPackageRoot;
     }
 
     public void setUrl(String url) {

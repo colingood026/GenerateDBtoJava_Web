@@ -11,11 +11,15 @@ public class MybatisXmlGenerator implements XmlGenerator{
 
 
     @Override
-	public String buildXml(String daoPackageRoot,
-			               List<TableFieldsVo> fields, 
+	public String buildXml(List<TableFieldsVo> fields, 
 			               String classNm,
 						   String tableNm){		
-		
+		String daoPackageRoot = "";
+        for(TableFieldsVo field:fields){
+            daoPackageRoot = field.getDaoPackageRoot();
+        }
+        
+        
 		StringBuffer sb = new StringBuffer();
 		sb.append("<?xml version='1.0' encoding='UTF-8' ?>").append(MethodUtils.N);;
 		sb.append("<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'"

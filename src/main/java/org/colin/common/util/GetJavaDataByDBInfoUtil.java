@@ -36,77 +36,96 @@ public class GetJavaDataByDBInfoUtil {
         String catalog = null;
         String schemaPattern = null;
         String columnNamePattern = null;
-        String[] tables = connDeatilVo.getTables().split(",");
-        for (String tableNm : tables) {
-            // *
-            Set<String> importJars = new HashSet<>();
-            // *
-            List<TableFieldsVo> fields = new ArrayList<>();
-            try {
-                Class.forName(connDeatilVo.getDbDriverClassNm());
-                conn = DriverManager.getConnection(connDeatilVo.getUrl(), connDeatilVo.getUserNm(),
-                        connDeatilVo.getPsd());
-
-                dma = conn.getMetaData();
-                rs = dma.getColumns(catalog, schemaPattern, tableNm, columnNamePattern);
-
-                while (rs.next()) {
-                    String columnNm = rs.getString("COLUMN_NAME");
-                    String sqlType = rs.getString("TYPE_NAME");
-                    String javaType = SqlTypeTransferEnum.getJavaTypeBySqlType(sqlType);
-                    if(javaType == null){
-                    	String javaTypeNotFound = "javaType is NULL when:"+MethodUtils.N+
-                    							  "columnNm="+columnNm+MethodUtils.N+
-                    							  "sqlType="+sqlType+MethodUtils.N;
-                        
-                    	errorMsg.add(javaTypeNotFound);
-                    	continue;
-                    }
-                    String importJar = ImportJarEnum.getImportStrByTypeName(javaType);
-                    if (importJar != null) {
-                        importJars.add(importJar);
-                    }
-                    
-                    if(errorMsg.size() > 0){
-                    	throw new JavaTypeNotFoundException(errorMsg.toString());
-                    }
-                    
-                    TableFieldsVo tableFieldsVo = new TableFieldsVo.Builder(columnNm.toLowerCase(), 
-                                                                            javaType,
-                                                                            connDeatilVo.getDaoPackageRoot(),
-                                                                            connDeatilVo.getModelPackageRoot()).build();
-                    fields.add(tableFieldsVo);
-                }
-                if(fields.size() == 0){
-                    throw new DbConnectionException("no field set");
-                }
-                // *
-                String classNm = MethodUtils.removeSplitForClassNm(tableNm.toLowerCase());
-
-                JavaDataVo javaDataVo = new JavaDataVo.Builder(classNm, tableNm, importJars, fields).build();
-
-                javaDataVos.add(javaDataVo);
-
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                if (rs != null) {
-                    try {
-                        rs.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (conn != null) {
-                    try {
-                        conn.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
+        String[] tables = connDeatilVo.getTables().split(";");
+        for (String table : tables) {
+            table  = table.replace(";", "");
+            // tableNms
+            String[] tableNms = table.split(":")[1].split(",");
+            // packageRoots
+            String[] packageRoots = table.split(":")[0].split(",");
+            String daoPackageRoot = "";
+            String modelPackageRoot = "";
+            // daoPackageRoot
+            if(packageRoots.length == 3){
+                daoPackageRoot = packageRoots[1];
+                modelPackageRoot = packageRoots[2];
+            }else{
+                daoPackageRoot = packageRoots[0];
+                modelPackageRoot = packageRoots[1];
             }
+            // getTableNm
+            for(String tableNm:tableNms){
+                // *
+                Set<String> importJars = new HashSet<>();
+                // *
+                List<TableFieldsVo> fields = new ArrayList<>();
+                try {
+                    Class.forName(connDeatilVo.getDbDriverClassNm());
+                    conn = DriverManager.getConnection(connDeatilVo.getUrl(), connDeatilVo.getUserNm(),
+                            connDeatilVo.getPsd());
+
+                    dma = conn.getMetaData();
+                    rs = dma.getColumns(catalog, schemaPattern, tableNm, columnNamePattern);
+
+                    while (rs.next()) {
+                        String columnNm = rs.getString("COLUMN_NAME");
+                        String sqlType = rs.getString("TYPE_NAME");
+                        String javaType = SqlTypeTransferEnum.getJavaTypeBySqlType(sqlType);
+                        if(javaType == null){
+                            String javaTypeNotFound = "javaType is NULL when:"+MethodUtils.N+
+                                                      "columnNm="+columnNm+MethodUtils.N+
+                                                      "sqlType="+sqlType+MethodUtils.N;
+                            
+                            errorMsg.add(javaTypeNotFound);
+                            continue;
+                        }
+                        String importJar = ImportJarEnum.getImportStrByTypeName(javaType);
+                        if (importJar != null) {
+                            importJars.add(importJar);
+                        }
+                        
+                        if(errorMsg.size() > 0){
+                            throw new JavaTypeNotFoundException(errorMsg.toString());
+                        }
+                        
+                        TableFieldsVo tableFieldsVo = new TableFieldsVo.Builder(columnNm.toLowerCase(), 
+                                                                                javaType,
+                                                                                daoPackageRoot,
+                                                                                modelPackageRoot).build();
+                        fields.add(tableFieldsVo);
+                    }
+                    if(fields.size() == 0){
+                        throw new DbConnectionException("no field set");
+                    }
+                    // *
+                    String classNm = MethodUtils.removeSplitForClassNm(tableNm.toLowerCase());
+
+                    JavaDataVo javaDataVo = new JavaDataVo.Builder(classNm, tableNm, importJars, fields).build();
+
+                    javaDataVos.add(javaDataVo);
+
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (rs != null) {
+                        try {
+                            rs.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (conn != null) {
+                        try {
+                            conn.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }                
+            }
+
         }
 
         return javaDataVos;

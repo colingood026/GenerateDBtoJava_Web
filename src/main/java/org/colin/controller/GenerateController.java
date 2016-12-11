@@ -37,9 +37,8 @@ public class GenerateController {
                                        @RequestParam(required=true) String psd,
                                        @RequestParam(required=true) String tables,
                                        @RequestParam(required=true) String orMappingType,
-                                       @RequestParam(required=true) String savedLocation,
-                                       @RequestParam(required=true) String daoPackageRoot,
-                                       @RequestParam(required=true) String modelPackageRoot){
+                                       @RequestParam(required=true) String savedLocation){
+        System.out.println(tables);
         Map<String,String> result = new HashMap<>();;
         String message = "檔案匯出成功";
         
@@ -51,8 +50,6 @@ public class GenerateController {
         connDeatilVo.setTables(tables);
         connDeatilVo.setUrl(dbDriverClassNm, host, port, dbName);
         connDeatilVo.setUserNm(userNm);
-        connDeatilVo.setDaoPackageRoot(daoPackageRoot);
-        connDeatilVo.setModelPackageRoot(modelPackageRoot);
         
         if(orMappingType.equals(OrMappingEnum.Mybatis.getOrMappingName())){
             try {
@@ -71,20 +68,20 @@ public class GenerateController {
         return result;
     }
     
-    @RequestMapping(value = "/getJdbcUrlPrefix.do", produces = "application/json")
-    @ResponseBody
-    public List<Map<String,String>> getJdbcUrlPrefix(){
-        
-        List<Map<String,String>> list = new ArrayList<>();
-        
-        for(DriverClassEnum a:DriverClassEnum.values()){
-            Map<String,String> map = new HashMap<>();
-            map.put(a.getDbNm(), a.getUrlPrefix()+","+a.getDefaultPort());
-            list.add(map);
-        }
-        
-        return list;
-    }
+//    @RequestMapping(value = "/getJdbcUrlPrefix.do", produces = "application/json")
+//    @ResponseBody
+//    public List<Map<String,String>> getJdbcUrlPrefix(){
+//        
+//        List<Map<String,String>> list = new ArrayList<>();
+//        
+//        for(DriverClassEnum a:DriverClassEnum.values()){
+//            Map<String,String> map = new HashMap<>();
+//            map.put(a.getDbNm(), a.getUrlPrefix()+","+a.getDefaultPort());
+//            list.add(map);
+//        }
+//        
+//        return list;
+//    }
     
 
     

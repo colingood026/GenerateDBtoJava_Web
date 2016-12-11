@@ -16,14 +16,12 @@ public interface JavaBeanGenerator {
     
     /**
      * 
-     * @param modelPackageRoot
      * @param importJars
      * @param fields
      * @param classNm
      * @return
      */
-    public String buildBean(String modelPackageRoot,
-                            Set<String> importJars, 
+    public String buildBean(Set<String> importJars, 
                             List<TableFieldsVo> fields, 
                             String classNm);
 }

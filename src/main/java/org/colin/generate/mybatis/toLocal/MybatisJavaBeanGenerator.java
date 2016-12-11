@@ -25,11 +25,15 @@ public class MybatisJavaBeanGenerator implements JavaBeanGenerator{
 
 
     @Override
-	public String buildBean(String modelPackageRoot,
-    					    Set<String> importJars, 
+	public String buildBean(Set<String> importJars, 
     					    List<TableFieldsVo> fields, 
     					    String classNm){
-		
+        String modelPackageRoot = "";
+        for(TableFieldsVo field:fields){
+            modelPackageRoot = field.getModelPackageRoot();
+        }
+        
+        
 		StringBuffer sb = new StringBuffer();
 		sb.append("package " + modelPackageRoot + ";").append(MethodUtils.N);
 		for(String importJar:importJars){			

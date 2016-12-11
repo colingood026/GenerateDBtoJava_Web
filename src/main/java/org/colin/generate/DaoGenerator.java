@@ -15,15 +15,13 @@ import org.colin.vo.TableFieldsVo;
 public interface DaoGenerator {
 
     /**
-     * 
-     * @param daoPackageRoot
+     *
      * @param importJars
      * @param fields
      * @param classNm
      * @return
      */
-    public String buildDao(String daoPackageRoot,
-                           Set<String> importJars, 
+    public String buildDao(Set<String> importJars, 
                            List<TableFieldsVo> fields, 
                            String classNm);
 }

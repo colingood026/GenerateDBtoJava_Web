@@ -13,11 +13,16 @@ public class MybatisDaoGenerator implements DaoGenerator{
 
     
     @Override
-	public String buildDao(String daoPackageRoot,
-			               Set<String> importJars, 
+	public String buildDao(Set<String> importJars, 
 						   List<TableFieldsVo> fields, 
 						   String classNm){
 		
+        String daoPackageRoot = "";
+        for(TableFieldsVo field:fields){
+            daoPackageRoot = field.getDaoPackageRoot();
+        }
+        
+        
 		StringBuffer sb = new StringBuffer();
 		sb.append("package "+daoPackageRoot+";").append(MethodUtils.N);
 		sb.append(ImportJarEnum.Annotation_Sprig_Repository.getImportName()).append(MethodUtils.N);
