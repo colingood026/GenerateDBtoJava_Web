@@ -9,7 +9,10 @@ public enum ImportJarEnum {
 	Annotation_Mybatis_Param("import org.apache.ibatis.annotations.Param;"),
 	//
 	BigDecimal("import java.math.BigDecimal;"),
-	Date("import java.util.Date;");
+	Date("import java.util.Date;"),
+    Util_List("import java.util.List;"),
+    Util_Array_List("import java.util.ArrayList;");
+    
 	private String importName;
 	private ImportJarEnum(String importNm){
 		this.importName = importNm;

@@ -34,7 +34,7 @@ public class ConnDeatilVo {
 	 */
 	private String psd;
 	/**
-	 * 要generate的tables(","分隔)
+	 * 要generate的tables(ex:daoPackageRoot,modelPackageRoot:table1,table2.....)
 	 */
 	private String tables;
 	/**

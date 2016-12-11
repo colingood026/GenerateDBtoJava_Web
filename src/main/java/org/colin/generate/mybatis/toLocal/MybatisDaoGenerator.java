@@ -27,6 +27,8 @@ public class MybatisDaoGenerator implements DaoGenerator{
 		sb.append("package "+daoPackageRoot+";").append(MethodUtils.N);
 		sb.append(ImportJarEnum.Annotation_Sprig_Repository.getImportName()).append(MethodUtils.N);
 		sb.append(ImportJarEnum.Annotation_Mybatis_Param.getImportName()).append(MethodUtils.N);
+		sb.append(ImportJarEnum.Util_List.getImportName()).append(MethodUtils.N);
+		sb.append(ImportJarEnum.Util_Array_List.getImportName()).append(MethodUtils.N);
 		sb.append("@Repository").append(MethodUtils.N);
 		sb.append("public interface "+classNm+"Mapper{").append(MethodUtils.N);
 		

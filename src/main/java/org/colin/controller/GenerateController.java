@@ -38,7 +38,7 @@ public class GenerateController {
                                        @RequestParam(required=true) String tables,
                                        @RequestParam(required=true) String orMappingType,
                                        @RequestParam(required=true) String savedLocation){
-        System.out.println(tables);
+        
         Map<String,String> result = new HashMap<>();;
         String message = "檔案匯出成功";
         

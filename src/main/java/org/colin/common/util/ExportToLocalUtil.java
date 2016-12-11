@@ -25,7 +25,7 @@ public class ExportToLocalUtil {
 	 * @return
 	 */
 	public static String createDirectory(String location){
-		
+		// C:/text
 		try {
 			File dbDir = new File(location);
 			if(dbDir.exists()){				
@@ -35,10 +35,7 @@ public class ExportToLocalUtil {
 				dbDir = new File(location);
 			}
 			dbDir.mkdir();
-			File modelDir = new File(location+"/model");
-			modelDir.mkdir();
-			File mapperDir = new File(location+"/mapper");
-			mapperDir.mkdir();
+
 			File xmlDir = new File(location+"/xml");
 			xmlDir.mkdir();
 		} catch (Exception e) {
@@ -47,17 +44,38 @@ public class ExportToLocalUtil {
 		}
 		return location;
 	}
+	
+	
 	/**
 	 * 
+	 * @param packageRoot
+	 * @param location
+	 * @return
+	 */
+	private static String createSubDirectorys(String packageRoot,String location){
+        // com.colin.model.car
+	    packageRoot = packageRoot.replaceAll("\\.","/");
+	    location = location+"/"+packageRoot + "/";
+        File root = new File(location);
+        if(root.exists() == false){
+            root.mkdirs();
+        }
+        
+        return location;
+	}
+	/**
+	 * 
+	 * @param modelPackageRoot
 	 * @param location
 	 * @param classNm
 	 * @param content
 	 */
-	public static void exportBean(String location,String classNm,String content){
+	public static void exportBean(String modelPackageRoot,String location,String classNm,String content){
 		BufferedWriter bw = null;		
 		FileWriter fw = null;
 		try {
-			File file = new File(location+"/model/"+classNm+".java");
+		    location = createSubDirectorys(modelPackageRoot,location);
+			File file = new File(location + classNm + ".java");
 			fw = new FileWriter(file);
 			bw = new BufferedWriter(fw);
 			bw.write(content);
@@ -70,15 +88,17 @@ public class ExportToLocalUtil {
 	}
 	/**
 	 * 
+	 * @param daoPackageRoot
 	 * @param location
 	 * @param classNm
 	 * @param content
 	 */
-	public static void exportMapper(String location,String classNm,String content){
+	public static void exportDao(String daoPackageRoot,String location,String classNm,String content){
 		BufferedWriter bw = null;	
 		FileWriter fw = null;
 		try {
-			File file = new File(location+"/mapper/"+classNm+"Mapper"+".java");
+		    location = createSubDirectorys(daoPackageRoot,location);
+			File file = new File(location + classNm + "Mapper.java");
 			fw = new FileWriter(file);
 			bw = new BufferedWriter(fw);
 			bw.write(content);
@@ -98,7 +118,7 @@ public class ExportToLocalUtil {
 	public static void exportXml(String location,String classNm,String content){
 		BufferedWriter bw = null;
 		FileWriter fw = null;
-		try {
+		try {		    
 			File file = new File(location+"/xml/"+classNm+"Mapper"+".xml");
 			fw = new FileWriter(file);
 			bw = new BufferedWriter(fw);

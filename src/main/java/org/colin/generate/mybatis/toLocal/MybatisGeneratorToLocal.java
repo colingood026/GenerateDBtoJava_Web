@@ -44,11 +44,18 @@ public class MybatisGeneratorToLocal {
                 String tableNm = vo.getTableNm();
                 List<TableFieldsVo> fields = vo.getFields();
                 //
+                String daoPackageRoot = "";
+                String modelPackageRoot = "";
+                for(TableFieldsVo field:fields){
+                    daoPackageRoot = field.getDaoPackageRoot();
+                    modelPackageRoot = field.getModelPackageRoot();
+                }
+                //
                 String bean = mybatisJavaBeanGenerator.buildBean(importJars,fields,classNm);
-                ExportToLocalUtil.exportBean(location, classNm, bean);
+                ExportToLocalUtil.exportBean(modelPackageRoot, location, classNm, bean);
                 //
                 String mapper = mybatisDaoGenerator.buildDao(importJars,fields,classNm);
-                ExportToLocalUtil.exportMapper(location, classNm, mapper);
+                ExportToLocalUtil.exportDao(daoPackageRoot, location, classNm, mapper);
                 //
                 String xml = mybatisXmlGenerator.buildXml(fields,classNm,tableNm);                
                 ExportToLocalUtil.exportXml(location, classNm, xml);
