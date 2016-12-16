@@ -12,7 +12,7 @@ import org.colin.vo.TableFieldsVo;
  * @author Colin
  *
  */
-public interface JavaBeanGenerator {
+public interface DBJavaBeanGenerator {
     
     /**
      * 

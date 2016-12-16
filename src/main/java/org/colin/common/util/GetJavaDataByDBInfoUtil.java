@@ -18,7 +18,7 @@ import org.colin.common.Exception.JavaTypeNotFoundException;
 import org.colin.common.enumClass.ImportJarEnum;
 import org.colin.common.enumClass.SqlTypeTransferEnum;
 import org.colin.vo.ConnDeatilVo;
-import org.colin.vo.JavaDataVo;
+import org.colin.vo.DBJavaDataVo;
 import org.colin.vo.TableFieldsVo;
 
 /**
@@ -26,9 +26,9 @@ import org.colin.vo.TableFieldsVo;
  *
  */
 public class GetJavaDataByDBInfoUtil {
-    public static List<JavaDataVo> getJavaDatas(ConnDeatilVo connDeatilVo) throws Exception {
+    public static List<DBJavaDataVo> getJavaDatas(ConnDeatilVo connDeatilVo) throws Exception {
 
-        List<JavaDataVo> javaDataVos = new ArrayList<>();
+        List<DBJavaDataVo> javaDataVos = new ArrayList<>();
         List<String> errorMsg = new ArrayList<>();
         Connection conn = null;
         ResultSet rs = null;
@@ -100,7 +100,7 @@ public class GetJavaDataByDBInfoUtil {
                     // *
                     String classNm = MethodUtils.removeSplitForClassNm(tableNm.toLowerCase());
 
-                    JavaDataVo javaDataVo = new JavaDataVo.Builder(classNm, tableNm, importJars, fields).build();
+                    DBJavaDataVo javaDataVo = new DBJavaDataVo.Builder(classNm, tableNm, importJars, fields).build();
 
                     javaDataVos.add(javaDataVo);
 

@@ -54,4 +54,57 @@ public class MethodUtils {
 		}
 		return sb.toString();
 	}
+	
+	
+    /**
+     * 
+     * @param fieldNm
+     * @param type
+     * @param comment
+     * @return
+     */
+    public static String createField(String fieldNm,String type,String comment){
+//        /**
+//         * comment
+//         */
+//        private type fieldNm;
+        StringBuffer aBuffer = new StringBuffer();
+        if(comment != null){
+            aBuffer.append(MethodUtils.CAPS+"/**").append(MethodUtils.N);        
+            aBuffer.append(MethodUtils.CAPS+" * ").append(comment).append(MethodUtils.N);
+            aBuffer.append(MethodUtils.CAPS+" */").append(MethodUtils.N);
+        }
+        aBuffer.append(MethodUtils.CAPS+"private "+type+" "+fieldNm+";");
+        return aBuffer.toString();
+    }
+    /**
+     * 
+     * @param fieldNm
+     * @param type
+     * @return
+     */
+    public static String createGet(String fieldNm,String type){
+//      public String getJavaType() {
+//          return javaType;
+//      }
+        String firstChar = fieldNm.substring(0, 1);
+        String get = "get"+firstChar.toUpperCase()+fieldNm.substring(1);
+        return MethodUtils.CAPS+"public "+type+" "+get+"(){ return "+fieldNm+";}";
+    }
+    /**
+     * 
+     * @param fieldNm
+     * @param type
+     * @return
+     */
+    public static String createSet(String fieldNm,String type){
+//      public void setJavaType(String javaType) {
+//          this.javaType = javaType;
+//      }
+        String firstChar = fieldNm.substring(0, 1);
+        String set = "set"+firstChar.toUpperCase()+fieldNm.substring(1);
+        return MethodUtils.CAPS+"public void "+set+"("+type+" "+fieldNm+"){"+MethodUtils.N+MethodUtils.DOUBLE_CAPS+
+                                        "this."+fieldNm+" = "+fieldNm+";"+MethodUtils.N+MethodUtils.CAPS+"}";
+        
+    }
 }

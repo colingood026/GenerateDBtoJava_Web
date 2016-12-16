@@ -11,7 +11,7 @@ import java.util.Set;
  * @author Colin
  *
  */
-public class JavaDataVo {
+public class DBJavaDataVo {
 	private final String classNm;
 	private final String tableNm;
 	private final Set<String> importJars;
@@ -34,7 +34,7 @@ public class JavaDataVo {
 		return fields;
 	}
 
-	private JavaDataVo(Builder builder){
+	private DBJavaDataVo(Builder builder){
 		classNm = builder.classNm;
 		tableNm = builder.tableNm;
 		importJars = builder.importJars;
@@ -65,8 +65,8 @@ public class JavaDataVo {
 			
 		}
 		
-		public JavaDataVo build(){
-			return new JavaDataVo(this);
+		public DBJavaDataVo build(){
+			return new DBJavaDataVo(this);
 		}
 	}
 
